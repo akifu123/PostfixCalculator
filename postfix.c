@@ -9,12 +9,60 @@ typedef struct {
 } Stack;
 
 
-void initialize(Stack *stack);
-bool isEmpty(Stack *stack);
-bool isFull(Stack *stack);
-void push(Stack *stack, int data);
-int pop(Stack *stack);
-int calculate(int operator, int operand1, int operand2);
+void initialize(Stack *stack) {
+    stack->top = -1;
+}
+
+
+bool isEmpty(Stack *stack) {
+    return stack->top == -1;
+}
+
+
+bool isFull(Stack *stack) {
+    return stack->top == MAX_SIZE - 1;
+}
+
+
+void push(Stack *stack, int DATA) {
+    if (isFull(stack)) {
+        printf("Stack Overflow\n");
+    } else {
+        stack->data[++stack->top] = DATA;
+    }
+}
+
+
+int pop(Stack *stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow\n");
+        return -1;
+    } else {
+        return stack->data[stack->top--];
+    }
+}
+int calculate(int operator, int operand1, int operand2) {
+    switch (operator) {
+        case '+':
+            return operand1 + operand2;
+        case '-':
+            return operand1 - operand2;
+        case '*':
+            return operand1 * operand2;
+        case '/':
+            if (operand2 == 0) {
+                printf("Error: Division by zero\n");
+                return -1;
+            } else {
+                return operand1 / operand2;
+            }
+        default:
+            printf("Error: Invalid operator\n");
+            return -1;
+    }
+}
+
+
 
 int main() {
     Stack stack;
@@ -71,58 +119,4 @@ int main() {
 }
 
 
-void initialize(Stack *stack) {
-    stack->top = -1;
-}
-
-
-bool isEmpty(Stack *stack) {
-    return stack->top == -1;
-}
-
-
-bool isFull(Stack *stack) {
-    return stack->top == MAX_SIZE - 1;
-}
-
-
-void push(Stack *stack, int data) {
-    if (isFull(stack)) {
-        printf("Stack Overflow\n");
-    } else {
-        stack->data[++stack->top] = data;
-    }
-}
-
-
-int pop(Stack *stack) {
-    if (isEmpty(stack)) {
-        printf("Stack Underflow\n");
-        return -1;
-    } else {
-        return stack->data[stack->top--];
-    }
-}
-
-
-int calculate(int operator, int operand1, int operand2) {
-    switch (operator) {
-        case '+':
-            return operand1 + operand2;
-        case '-':
-            return operand1 - operand2;
-        case '*':
-            return operand1 * operand2;
-        case '/':
-            if (operand2 == 0) {
-                printf("Error: Division by zero\n");
-                return -1;
-            } else {
-                return operand1 / operand2;
-            }
-        default:
-            printf("Error: Invalid operator\n");
-            return -1;
-    }
-}
 
